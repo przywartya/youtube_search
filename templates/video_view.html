@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block search_form %}
+	<li id="search_bar">
+		<form class="form-inline" method="POST" action=''>
+			{% csrf_token %}
+			{{ search_form }}
+			<input class='btn btn-primary' type='submit' name='search' value='Search'/>
+		</form>
+	</li>
+{% endblock %}
+
+{% block content %}
+<div>
+	<iframe width="560" height="315" 
+	src="https://www.youtube.com/embed/{{link}}" 
+	frameborder="0" allowfullscreen>
+	</iframe>
+
+<form method="POST" action="">
+		{% csrf_token %}
+		<div class="panel panel-default" style="width:25%;padding-bottom: .5%;">
+		<div class="panel-heading">{{ form.rating }}</div>
+		<div class="panel-body">{{ form.content }}</div>
+		<input class="btn btn-default" name='comment' type="submit" value="Submit" />
+		</div>
+</form>
+
+	{% if messages %}
+	<div class='messages'>
+		<ul class="messages">
+			{% for message in messages %}
+			<li> {{ message }}</li>
+			{% endfor %}
+		</ul>
+	</div>
+{% endif %}
+
+{% for comment in comments %}
+	<div class="well well-primary" style="width:auto;word-wrap:break-word;">
+		<h2>{{comment.rating}}</h2>
+		<h4>{{comment.content}}</h4>
+		<h5>By: {{ comment.user }}({{comment.timestamp}})</h5>
+	</div>
+{% endfor %}
+</div>
+{% endblock %}
+

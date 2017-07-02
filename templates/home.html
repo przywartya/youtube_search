@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block search_form %}
+	<li id="search_bar">
+		<form class="form-inline" method="POST" action=''>
+			{% csrf_token %}
+			{{ form }}
+			<input class='btn btn-primary' type='submit' value='Search'/>
+		</form>
+	</li>
+{% endblock %}
+
+{% block content %}
+	{% if messages %}
+		<div class='messages'>
+			<ul class="messages">
+			{% for message in messages %}
+				<li> {{ message }}</li>
+			{% endfor %}
+			</ul>
+		</div>
+	{% endif %}
+	{% for result in search_results %}
+			<div class='col-sm-3'>
+				<a href="/view/{{result.id}}">{{ result.title|truncatechars:45 }}</a></br>
+				<iframe width="300" height="200" 
+				src="https://www.youtube.com/embed/{{result.id}}" 
+				frameborder="1" allowfullscreen></iframe>
+			</div>
+	{% endfor %}
+{% endblock %}
